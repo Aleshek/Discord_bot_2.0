@@ -1,4 +1,0 @@
-[v0.1]
-- remaking functionaly from the old bot
-- remade music bot
- 
