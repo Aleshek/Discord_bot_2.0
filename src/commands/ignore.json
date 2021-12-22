@@ -1,0 +1,7 @@
+{
+    "skip":[
+        "ignore.json",
+        "test",
+        "blueprint.js"
+    ]
+}

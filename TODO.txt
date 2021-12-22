@@ -1,0 +1,8 @@
+- remake all the commands from the old bot
+- remake info command with subcommands
+- remake gamelist with database https://discordjs.guide/sequelize/#why-use-an-orm
+- make gamelist actually save recent rolls
+- add reply system
+
+- skip a specific song
+- add ephemeral option for music bot commands

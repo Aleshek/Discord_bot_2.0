@@ -1,0 +1,19 @@
+{
+    "games":[
+        {"name": "League of Legends", "id": 0, "max_players": "5", "recently_rolled": 0},
+        {"name": "Dead by Daylight", "id": 1, "max_players": "4", "recently_rolled": 0},
+        {"name": "Apex Legends", "id": 2, "max_players": "3", "recently_rolled": 0},
+        {"name": "Phasmophobia", "id": 3, "max_players": "4", "recently_rolled": 0},
+        {"name": "Minecraft", "id": 4, "max_players": "99", "recently_rolled": 0},
+        {"name": "Metin 2", "id": 5, "max_players": "99", "recently_rolled": 0},
+        {"name": "Risk of Rain 2", "id": 6, "max_players": "5", "recently_rolled": 0},
+        {"name": "FFXIV", "id": 7, "max_players": "8", "recently_rolled": 0},
+        {"name": "Escape from Tarkov", "id": 8, "max_players": "4", "recently_rolled": 0},
+        {"name": "Fortnite", "id": 9, "max_players": "4", "recently_rolled": 0},
+        {"name": "Heroes of the Strom", "id": 10, "max_players": "5", "recently_rolled": 0},
+        {"name": "TFT", "id": 11, "max_players": "6", "recently_rolled": 0},
+        {"name": "Overwatch", "id": 12, "max_players": "6", "recently_rolled": 0},
+        {"name": "Paladins", "id": 13, "max_players": "6", "recently_rolled": 0},
+        {"name": "Guild Wars 2", "id": 14, "max_players": "5", "recently_rolled": 0}
+    ]
+}
