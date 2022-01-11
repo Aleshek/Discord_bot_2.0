@@ -1,5 +1,7 @@
 /*
 `` - ALTGR + 7(ý)
+autoformat VSC Shift + Alt + F
+autoformat MSVS Ctrl+K -> Ctrl+D
 */
 const { Client, Intents, DiscordAPIError, Collection } = require('discord.js');
 const { token } = require('./system/config.json');
@@ -7,7 +9,7 @@ const deployCommands = require('./system/deploy_commands.js');
 const fs = require('fs');
 const { skip } = require('./commands/ignore.json');
 const { musicSkip } = require('./MusicBot/ingore.json');
-const { AudioPlayerStatus} = require('@discordjs/voice');
+const { AudioPlayerStatus } = require('@discordjs/voice');
 
 const client = new Client({ intents: 32767 });
 
@@ -34,13 +36,13 @@ for (const folder of commandFolders) {
 //------------------------------MUSIC BOT COMMANDS-------------------------------
 const musicFolder = fs.readdirSync('./src/MusicBot').filter(file => file.endsWith('.js'));
 const ignoredMusicFiles = musicSkip;
-for(const file of musicFolder){
-    if(!ignoredMusicFiles.includes(file)){
+for (const file of musicFolder) {
+    if (!ignoredMusicFiles.includes(file)) {
         //const fileName_M = file + ".js"
-        try{
+        try {
             const command = require(`./MusicBot/${file}`);
             client.commands.set(command.data.name, command);
-        } catch(e){
+        } catch (e) {
             console.log(e);
             console.log(`[Index] Couldn't import ${file}! Skipping`);
         }

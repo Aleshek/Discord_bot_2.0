@@ -1,7 +1,6 @@
 {
     "musicSkip":[
         "ignore.json",
-        "AudioPlayer.js",
         "Sounds",
         "Events"
     ]

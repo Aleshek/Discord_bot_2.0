@@ -18,7 +18,6 @@ module.exports = {
         ),
     async execute(interaction) {
         const hidden = interaction.options.getBoolean('hidden') || false;
-        //var output = joinVC(interaction) || "TEMP MESSAGE";
         var output = "";
         if(joinVC(interaction) == 0){ //success
             var songURL = interaction.options.getString('url');
@@ -48,7 +47,6 @@ module.exports = {
                 }                
             } else if (serverQueue.length == 0){ //queue is empty even after calling createObjectAndAddToQ
                 output = `Could not create a song object/add it to the queue! (${songURL})`;
-                //output = "Error creating song object/adding it to the queue!"
             }
         } else if(joinVC(interaction) == -1){ //fail
             output = "Could not join a voice channel!";
@@ -81,7 +79,6 @@ function joinVC(interaction) {
         }
         return 0 //success
     } catch (e) {
-        //return "You have to be in a voice channel! >:c"
         return -1 //error
     }
 }
@@ -91,7 +88,7 @@ async function createObjectAndAddToQ(url) {
         const songInfo = await ytdl.getInfo(url);
         const songAudio = ytdl.downloadFromInfo(songInfo, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 });
         const song = {
-            title: songInfo.videoDetails.title,//getSong.videoDetails.title,
+            title: songInfo.videoDetails.title,
             url: songInfo.videoDetails.video_url,
             object: songAudio,
         };
