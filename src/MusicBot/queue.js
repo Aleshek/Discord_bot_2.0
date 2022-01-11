@@ -4,8 +4,14 @@ const {formatText} = require('../system/utility.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('queue')
-        .setDescription('Queue'),
+        .setDescription('Queue')
+        .addBooleanOption(option =>
+            option.setName('hidden')
+                .setDescription('Should the reply be hidden? (default false')
+                .setRequired(false)
+        ),
         async execute(interaction){
+            const hidden = interaction.options.getBoolean('hidden') || false;
             var nowPlaying = "Now playing:\n";
             if(serverQueue.length > 0){
                 nowPlaying += serverQueue[0].title + " | " + serverQueue[0].url + "\n";
@@ -20,6 +26,12 @@ module.exports = {
             }
             var formatedQueue = formatText(queue);
             var output = formatedNowPlaying + formatedQueue;
-            await interaction.reply({ content: output, ephemeral: true });
+            
+            if(hidden==true){
+                await interaction.reply({ content: output, ephemeral: true });
+            } else {
+                await interaction.reply({ content: output, ephemeral: false });
+            }
+            
         }
 }

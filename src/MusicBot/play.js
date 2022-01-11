@@ -10,34 +10,56 @@ module.exports = {
             option.setName('url')
                 .setDescription('Youtube URL of a song you want to play')
                 .setRequired(true)
+        )
+        .addBooleanOption(option =>
+            option.setName('hidden')
+                .setDescription('Should the reply be hidden? (default false')
+                .setRequired(false)
         ),
     async execute(interaction) {
-        var output = joinVC(interaction) || "TEMP MESSAGE";
-        var songURL = interaction.options.getString('url');
-        await createObjectAndAddToQ(songURL);
-        if (serverQueue.length == 1) { //AUTOREPLY IF QUEUE IS EMPTY
-            await player.removeAllListeners();
-
-            console.log("[Music bot] - FIRST PLAY");
-            let resource = createAudioResource(serverQueue[0].object);
-            await player.play(resource); //PLAY 
-
-            player.on(AudioPlayerStatus.Idle, () => { //CREATE A LISTENER
-                console.log("[Music bot] - IDLE EVENT TRIGGERED!");
-                serverQueue.shift();
-                if (serverQueue.length == 0) {//
-                    console.log('[Music bot] - Queue is empty')
-                    output = "Queue is empty";
-                } else {
-                    var resource = createAudioResource(serverQueue[0].object);
-                    console.log(serverQueue[0].title);
-                    player.play(resource);
-                }
-            });
+        const hidden = interaction.options.getBoolean('hidden') || false;
+        //var output = joinVC(interaction) || "TEMP MESSAGE";
+        var output = "";
+        if(joinVC(interaction) == 0){ //success
+            var songURL = interaction.options.getString('url');
+            await createObjectAndAddToQ(songURL);
+            output = `${songURL} added to the queue`;
+            if (serverQueue.length == 1) {
+                try{
+                    await player.removeAllListeners();    
+                    console.log("[Music bot] - FIRST PLAY");
+                    let resource = createAudioResource(serverQueue[0].object);
+                    await player.play(resource); //PLAY 
+        
+                    player.on(AudioPlayerStatus.Idle, () => { //CREATE A LISTENER
+                        console.log("[Music bot] - IDLE EVENT TRIGGERED!");
+                        serverQueue.shift();
+                        if (serverQueue.length == 0) {
+                            console.log('[Music bot] - Queue is empty')
+                            //output = "Queue is empty";
+                        } else {
+                            var resource = createAudioResource(serverQueue[0].object);
+                            console.log(serverQueue[0].title);
+                            player.play(resource);
+                        }
+                    });
+                } catch(e){
+                    output = "Could not create an audio player!"
+                }                
+            } else if (serverQueue.length == 0){ //queue is empty even after calling createObjectAndAddToQ
+                output = `Could not create a song object/add it to the queue! (${songURL})`;
+                //output = "Error creating song object/adding it to the queue!"
+            }
+        } else if(joinVC(interaction) == -1){ //fail
+            output = "Could not join a voice channel!";
         }
-
-
-        await interaction.reply({ content: output, ephemeral: true })
+       
+        if(hidden == true){
+            await interaction.reply({ content: output, ephemeral: true });
+        } else {
+            await interaction.reply({ content: output, ephemeral: false });
+        }
+        
     }
 }
 
@@ -57,8 +79,10 @@ function joinVC(interaction) {
                 console.log(`[Music bot] - Connection transitioned from ${oldState.status} to ${newState.status}`);
             })
         }
+        return 0 //success
     } catch (e) {
-        return "You have to be in a voice channel! >:c"
+        //return "You have to be in a voice channel! >:c"
+        return -1 //error
     }
 }
 
@@ -73,9 +97,9 @@ async function createObjectAndAddToQ(url) {
         };
         serverQueue.push(song);
         console.log(`[Music bot] - Current server queue length: ${serverQueue.length}`);
-        return "Created a song resource"
+        return 0
     } catch (e) {
         console.log(e);
-        return "Failed to create a music object! Check console!"
+        return -1
     }
 }
