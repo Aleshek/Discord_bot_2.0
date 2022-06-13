@@ -2,6 +2,8 @@
     "skip":[
         "ignore.json",
         "test",
-        "blueprint.js"
+        "blueprint.js",
+        "lastJoined.json",
+        "lastJoined_logic.js"
     ]
 }
