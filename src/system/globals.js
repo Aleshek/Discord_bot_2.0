@@ -1,5 +1,6 @@
 const {musicBotChannelID} = require('./config.json');
 const {NoSubscriberBehavior, createAudioPlayer } = require('@discordjs/voice');
+const {guildID} = require('./config.json');
 
 
 module.exports = {
@@ -12,6 +13,7 @@ module.exports = {
                 noSubscriber: NoSubscriberBehavior.Pause,              
             },   
         });
+        global.mainServer = client.guilds.cache.get(guildID);
     }
 }
 

@@ -3,15 +3,17 @@
 autoformat VSC Shift + Alt + F
 autoformat MSVS Ctrl+K -> Ctrl+D
 */
-const { Client, Intents, DiscordAPIError, Collection } = require('discord.js');
+const { Client, Intents, DiscordAPIError, Collection, GuildMemberManager, GuildManager } = require('discord.js');
 const { token } = require('./system/config.json');
+
 const deployCommands = require('./system/deploy_commands.js');
 const fs = require('fs');
 const { skip } = require('./commands/ignore.json');
 const { musicSkip } = require('./MusicBot/ingore.json');
 const { AudioPlayerStatus } = require('@discordjs/voice');
 
-const client = new Client({ intents: 32767 });
+
+const client = new Client({ intents: 32767, partials:['CHANNEL'] }); //PARTIAL FOR RECEIVING DMS 
 
 //-------------------------------------COMMANDS-------------------------------------------------------------
 client.commands = new Collection();

@@ -85,8 +85,16 @@ module.exports = {
                     },
                     {
                         name: 'Account created',
-                        value: new Date(member.createdTimestamp).toLocaleDateString(),
+                        value: new Date(user.createdTimestamp).toLocaleDateString(),
                     },
+                    /*{
+                        name: 'Status',
+                        value: member.presence.status || "Could not be verified",
+                    },*/
+                    {
+                        name: 'Display color',
+                        value: member.displayHexColor,
+                    },                   
                 )
                 .setImage(user.displayAvatarURL())
                 .addField('Avatar URL', user.displayAvatarURL() || 'missing url')
